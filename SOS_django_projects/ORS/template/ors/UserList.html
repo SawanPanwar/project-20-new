@@ -1,0 +1,98 @@
+{% include "./Header.html"%}
+<br>
+<div class="container">
+    <form method="POST">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-users"></i> User List</h5>
+                <a href="/ORS/User" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Add User
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="form-row align-items-end">
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">First Name</label>
+                        <input class="form-control form-control-sm" name="firstName" value="{{form.firstName}}" placeholder="First Name">
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Last Name</label>
+                        <input class="form-control form-control-sm" name="lastName" value="{{form.lastName}}" placeholder="Last Name">
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Login (Email)</label>
+                        <input class="form-control form-control-sm" name="login" value="{{form.login}}" placeholder="Login">
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Mobile</label>
+                        <input class="form-control form-control-sm" name="mobileNumber" value="{{form.mobileNumber}}" placeholder="Mobile">
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Gender</label>
+                        {{ preload_data.gender_select|safe }}
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Role</label>
+                        {{ preload_data.role_select|safe }}
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <button class="btn btn-primary btn-sm btn-block" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm table-bordered table-hover table-responsive-sm">
+                <thead class="thead-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">PHOTO</th>
+                    <th scope="col">FIRST NAME</th>
+                    <th scope="col">LAST NAME</th>
+                    <th scope="col">LOGIN</th>
+                    <th scope="col">DATE OF BIRTH</th>
+                    <th scope="col">MOBILE NO</th>
+                    <th scope="col">ROLE</th>
+                    <th scope="col">GENDER</th>
+                    <th scope="col">ACTION</th>
+                </thead>
+                <tbody>
+                    {% for e in pageList %}
+                    <tr>
+                        <td>{{e.id}}</td>
+                        <td>
+                            {% if e.photo %}
+                            <img src="{{MEDIA_URL}}{{e.photo}}" alt="photo"
+                                style="width:40px;height:40px;object-fit:cover;border-radius:50%;">
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>{{e.first_name}}</td>
+                        <td>{{e.last_name}}</td>
+                        <td>{{e.login}}</td>
+                        <td>{{e.dob}}</td>
+                        <td>{{e.mobile_number}}</td>
+                        <td>{{e.role_name}}</td>
+                        <td>{{e.gender}}</td>
+                        <td>
+                            <a href="/ORS/User/{{e.id}}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/ORS/UserList/delete/{{e.id}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include "./Footer.html"%}
