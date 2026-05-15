@@ -1,0 +1,127 @@
+{% include "./Header.html"%}
+<br>
+<div class="container">
+    <form method="POST">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-university"></i> College List</h5>
+                <a href="/ORS/College" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Add College
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="form-row align-items-end">
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">College Name</label>
+                        <input class="form-control form-control-sm" name="name"
+                               value="{{form.name}}" placeholder="College Name">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Address</label>
+                        <input class="form-control form-control-sm" name="address"
+                               value="{{form.address}}" placeholder="Address">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">State</label>
+                        <input class="form-control form-control-sm" name="state"
+                               value="{{form.state}}" placeholder="State">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">City</label>
+                        <input class="form-control form-control-sm" name="city"
+                               value="{{form.city}}" placeholder="City">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <button type="submit" name="operation" value="Search"
+                                class="btn btn-primary btn-sm btn-block">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-sm table-bordered table-hover table-responsive-sm">
+
+                    <thead class="thead-dark text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">ADDRESS</th>
+                    <th scope="col">STATE</th>
+                    <th scope="col">CITY</th>
+                    <th scope="col">PHONE NO</th>
+                    <th scope="col">ACTION</th>
+                    </thead>
+
+                    <tbody class="text-center">
+
+                    {% for e in page_list %}
+                    <tr>
+                        <td>{{ form.start_index|add:forloop.counter }}</td>
+                        <td>{{e.name}}</td>
+                        <td>{{e.address}}</td>
+                        <td>{{e.state}}</td>
+                        <td>{{e.city}}</td>
+                        <td>{{e.phone_number}}</td>
+
+                        <td>
+                            <a href="/ORS/College/{{e.id}}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <a href="/ORS/CollegeList/delete/{{e.id}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted p-3">
+                            No Records Found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+
+                <button type="submit" name="operation" value="Previous"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_previous %}disabled{% endif %}>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+
+                <span class="font-weight-bold">
+                    Page : {{form.page_no}}
+                </span>
+
+                <button type="submit" name="operation" value="Next"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_next %}disabled{% endif %}>
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% include "./Footer.html" %}

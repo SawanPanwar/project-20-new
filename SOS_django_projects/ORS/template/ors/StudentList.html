@@ -1,0 +1,149 @@
+{% include "./Header.html"%}
+<br>
+<div class="container">
+    <form method="POST">
+
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-user-graduate"></i> Student List
+                </h5>
+
+                <a href="/ORS/Student" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Add Student
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="form-row align-items-end">
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">First Name</label>
+                        <input class="form-control form-control-sm"
+                               name="firstName"
+                               value="{{form.first_name}}"
+                               placeholder="First Name">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Last Name</label>
+                        <input class="form-control form-control-sm"
+                               name="lastName"
+                               value="{{form.last_name}}"
+                               placeholder="Last Name">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">Email</label>
+                        <input class="form-control form-control-sm"
+                               name="email"
+                               value="{{form.email}}"
+                               placeholder="Email">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <label class="small mb-1">College</label>
+                        {{ preload_data.college_select|safe }}
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <button type="submit"
+                                name="operation"
+                                value="Search"
+                                class="btn btn-primary btn-sm btn-block">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <table class="table table-sm table-bordered table-hover table-responsive-sm">
+
+                    <thead class="thead-dark text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">COLLEGE</th>
+                    <th scope="col">FIRST NAME</th>
+                    <th scope="col">LAST NAME</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">MOBILE</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">ACTION</th>
+                    </thead>
+
+                    <tbody class="text-center">
+
+                    {% for e in page_list %}
+                    <tr>
+
+                        <td>{{ form.start_index|add:forloop.counter }}</td>
+                        <td>{{e.college_name}}</td>
+                        <td>{{e.first_name}}</td>
+                        <td>{{e.last_name}}</td>
+                        <td>{{e.dob}}</td>
+                        <td>{{e.mobile_number}}</td>
+                        <td>{{e.email}}</td>
+
+                        <td>
+
+                            <a href="/ORS/Student/{{e.id}}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <a href="/ORS/StudentList/delete/{{e.id}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted p-3">
+                            No Records Found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+
+                <button type="submit"
+                        name="operation"
+                        value="Previous"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_previous %}disabled{% endif %}>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+
+                <span class="font-weight-bold">
+                    Page : {{form.page_no}}
+                </span>
+
+                <button type="submit"
+                        name="operation"
+                        value="Next"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_next %}disabled{% endif %}>
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% include "./Footer.html"%}
