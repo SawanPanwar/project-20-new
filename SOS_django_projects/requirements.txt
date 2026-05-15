@@ -1,5 +1,0 @@
-Django
-django-cors-headers
-djangorestframework
-xhtml2pdf
-xlwt
